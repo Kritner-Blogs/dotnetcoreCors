@@ -15,6 +15,8 @@ namespace dotnetcoreCors.Api
 {
     public class Startup
     {
+        private const string AllowAllOriginsPolicy = "AllowAllOriginsPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +27,16 @@ namespace dotnetcoreCors.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add CORS policy
+            services.AddCors(options =>
+            {
+                options.AddPolicy(AllowAllOriginsPolicy,
+                builder =>
+                {
+                    builder.AllowAnyOrigin();
+                });
+            });
+
             services.AddControllers();
         }
 
@@ -37,6 +49,9 @@ namespace dotnetcoreCors.Api
             }
 
             app.UseHttpsRedirection();
+
+            // Use the CORS policy
+            app.UseCors(AllowAllOriginsPolicy);
 
             app.UseRouting();
 
