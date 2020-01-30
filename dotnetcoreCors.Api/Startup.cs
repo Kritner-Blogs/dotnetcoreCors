@@ -49,14 +49,9 @@ namespace dotnetcoreCors.Api
             }
 
             app.UseHttpsRedirection();
-
-            // Use the CORS policy
-            app.UseCors(AllowAllOriginsPolicy);
-
             app.UseRouting();
-
+            app.UseCors(AllowAllOriginsPolicy);
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
